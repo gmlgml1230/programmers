@@ -1,0 +1,32 @@
+1. 월별 액티브한 사용자 수 카운트 쿼리
+### 결과 예시
+### 2019-05 : 400
+### 2019-06 : 500
+### ...
+
+### 쿼리
+SELECT 
+    join1.y_m,
+    COUNT(*)
+FROM (
+    SELECT 
+        DISTINCT to_char(st.ts, 'YYYY-MM') AS y_m, usc.userid
+    FROM raw_data.session_timestamp AS st
+    JOIN raw_data.user_session_channel AS usc
+        ON st.sessionid = usc.sessionid
+) AS join1
+GROUP BY
+    join1.y_m
+
+### 결과
+2019-05	281
+2019-06	459
+2019-07	623
+2019-09	639
+2019-10	763
+2019-08	662
+2019-11	721
+
+
+
+2. 가상의 데이터 인프라 구축(디자인)
